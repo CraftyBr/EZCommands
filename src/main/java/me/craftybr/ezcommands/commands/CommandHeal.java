@@ -69,10 +69,11 @@ public class CommandHeal implements TabExecutor {
             }
 
             //Sending Messages
-            if(sender.hasPermission("EZCommands.command.heal.silent") && parser.isSilent())
-                return;
-            sender.sendMessage(messageFormatter("command.heal.output.senderConsole", sender, target));
-            target.sendMessage(messageFormatter("command.heal.output.targetConsole", sender, target));
+            if(parser.isSilent()) {
+                sender.sendMessage(messageFormatter("command.heal.output.senderConsole", sender, target));
+                target.sendMessage(messageFormatter("command.heal.output.targetConsole", sender, target));
+            }
+
         }
     }
 
@@ -108,7 +109,6 @@ public class CommandHeal implements TabExecutor {
                         potionEffectClearer(target);
                 }
                 //Set Target Health
-                System.out.println("args: " + args.length + " | percent: " + parser.percentIndex() + " | double: " + parser.doubleIndex());
                 if (parser.doubleIndex() == -1 && parser.percentIndex() == -1)
                     target.setHealth(20.0);
                 if (parser.percentIndex() >= 0) {
@@ -124,13 +124,12 @@ public class CommandHeal implements TabExecutor {
                 }
 
                 //Sending Messages
-                if (parser.isSilent()) {
-                    if (target == player) {
-                        player.sendMessage(messageFormatter("command.heal.output.target", sender, target));
-                    } else {
-                        sender.sendMessage(messageFormatter("command.heal.output.senderConsole", sender, target));
+                if(sender.hasPermission("EZCommands.command.heal.silent") && parser.isSilent()) {
+                }
+                else {
+                    if (target != player)
                         target.sendMessage(messageFormatter("command.heal.output.targetConsole", sender, target));
-                    }
+                    player.sendMessage(messageFormatter("command.heal.output.target", sender, target));
                 }
             }
         } else {
