@@ -1,0 +1,41 @@
+# Version: 1.0-SNAPSHOT (DO NOT TOUCH)
+#
+# Color Code Usage Information:
+# Color Codes must be identified using the & symbol, If you would like to use & in a message, please surround it with square brackets. E.g: [&]
+# If you would like to use hex codes, please do so by indicating using an & symbol followed by # and your hex code.
+# E.g.: '&#FFFF55' is the same as '&e'
+#
+# A list of allowed placeholders is below. Please note that not all placeholders will work for each command.
+# [boolean] - Displays the status of a boolean change.
+# [number] - Displays the status of a number.
+# [percent] - Displays the status of a percent.
+# [target] - Displays the username of the player the command has been executed on.
+# [usage] - Displays the proper usage for each command, located on each command's USAGE line. Recommended to not change.
+
+
+error:
+  console:
+    usage: 'Correct Usage: [usage].'
+    notarget: 'Error: No target found.'
+  player:
+    usage: '&eError: Correct Usage: [usage]'
+    notarget: '&eError: No target found.'
+    nopermission: '&eYou do not have permission to do this.'
+
+command:
+  fly:
+    help:
+      usage: '/fly (player) (true/false) (-s)'
+    output:
+      sender: '&eFly mode for [target] has been set to &6[boolean]&e.'
+      senderConsole: 'Fly mode for [target] has been set to [boolean].'
+      target: '&eYour fly mode has been set to &6[boolean]&e.'
+      targetConsole: '&eYour fly mode has been set to &6[boolean]&e.'
+  heal:
+    help:
+      usage: '/heal (player/all) (heal amount/heal percentage) (-feed) (-ignoreeffects) (-noextinguish) (-s)'
+    output:
+      sender: '&e[target] has been healed.'
+      senderConsole: '[target] has been healed.'
+      target: '&eYou have been healed.'
+      targetConsole: '&eYou have been healed.'

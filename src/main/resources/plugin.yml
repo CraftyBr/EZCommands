@@ -1,0 +1,28 @@
+name: EZCommands
+version: ${project.version}
+main: me.craftybr.ezcommands.EZCommands
+api-version: 1.16
+authors: [ CraftyBr ]
+description: Minecraft Command Plugin
+prefix: EZC
+
+
+commands:
+  fly:
+    description: Toggle on/off fly.
+    permission: EZCommands.commands.fly
+    permission-message: §eYou do not have permission to do /fly
+  heal:
+    description: Heal a player
+    permission: EZCommands.commands.heal
+    permission-message: §eYou do not have permission to do /heal
+
+#permissions:
+#  EZCommands.commands.*:
+#   children:
+#      EZCommands.commands.fly
+#  EZCommands.commands.fly:
+#    children:
+#      EZCommands.commands.fly.other
+#      EZCommands.commands.fly.silent
+#  EZCommands.commands.fly.other.silent:
