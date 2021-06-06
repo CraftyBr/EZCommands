@@ -80,7 +80,7 @@ public class parsePlayerCommand {
     public double percentValue() { return percentValue; }
     public int percentIndex() { return percentIndex; }
     public boolean isSilent() {
-        return !isSilent;
+        return isSilent;
     }
     public boolean usageError() {
         return usageError;

@@ -69,11 +69,10 @@ public class CommandHeal implements TabExecutor {
             }
 
             //Sending Messages
-            if(parser.isSilent()) {
-                sender.sendMessage(messageFormatter("command.heal.output.senderConsole", sender, target));
-                target.sendMessage(messageFormatter("command.heal.output.targetConsole", sender, target));
-            }
-
+            if(sender.hasPermission("EZCommands.command.heal.silent") && parser.isSilent())
+                return;
+            sender.sendMessage(messageFormatter("command.heal.output.senderConsole", sender, target));
+            target.sendMessage(messageFormatter("command.heal.output.targetConsole", sender, target));
         }
     }
 
