@@ -39,9 +39,7 @@ public class CommandHeal implements TabExecutor {
         } else if(parser.targetIndex()==-1 && !args[0].equalsIgnoreCase("all")){
             sender.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(plugin.getString("error.console.notarget"))));
         } else if(args[0].equalsIgnoreCase("all")) {
-            for(Player p:Bukkit.getServer().getOnlinePlayers()) {
-                p.sendMessage("Hello");
-            }
+            healAll(sender, args);
         } else {
             Player target = Bukkit.getPlayerExact(args[parser.targetIndex()]);
             assert target != null;
@@ -55,7 +53,6 @@ public class CommandHeal implements TabExecutor {
                 potionEffectClearer(target);
 
             //Set Target Health
-            System.out.println("args: " + args.length + " | percent: " + parser.percentIndex() + " | double: " + parser.doubleIndex());
             if(parser.doubleIndex()==-1 && parser.percentIndex()==-1)
                 target.setHealth(20.0);
             if(parser.percentIndex()>=0)
@@ -84,9 +81,10 @@ public class CommandHeal implements TabExecutor {
             if (parser.usageError()) {
                 player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(plugin.getString("error.player.usage"))).replace("[sender]", sender.getName()).replace("[usage]", Objects.requireNonNull(plugin.getString("command.heal.help.usage"))));
             } else if (args.length>0 && args[0].equalsIgnoreCase("all")) {
-                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                    p.sendMessage("Hello");
-                }
+                if(sender.hasPermission("EZCommands.commands.heal.all"))
+                    healAll(sender, args);
+                else
+                    player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(plugin.getString("error.player.nopermission"))));
             } else {
                 Player target;
                 if (parser.getTarget() == null)
@@ -136,7 +134,6 @@ public class CommandHeal implements TabExecutor {
             sender.sendMessage(ColorUtils.translateColorCodes( Objects.requireNonNull(plugin.getString("error.player.nopermission"))));
         }
     }
-
     private void potionEffectClearer(Player target) {
         for(PotionEffect potion : target.getActivePotionEffects()) {
             if(potion.getType().equals(PotionEffectType.SLOW))
@@ -163,6 +160,46 @@ public class CommandHeal implements TabExecutor {
                 target.removePotionEffect(PotionEffectType.BAD_OMEN);
 
 
+        }
+    }
+    private void healAll(CommandSender sender, String[] args) {
+        Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
+        Bukkit.getServer().getOnlinePlayers().toArray(players);
+        for (Player target : players) {
+            assert target != null;
+            //Other effects
+            if(args.length!=0) {
+                List<String> argsList = Arrays.asList(args);
+                if (argsList.contains("-feed"))
+                    target.setFoodLevel(20);
+                if (!argsList.contains("-noextinguish"))
+                    target.setFireTicks(0);
+                if (!argsList.contains("-ignoreeffects"))
+                    potionEffectClearer(target);
+            }
+            //Set Target Health
+            if (parser.doubleIndex() == -1 && parser.percentIndex() == -1)
+                target.setHealth(20.0);
+            if (parser.percentIndex() >= 0) {
+                double healValue = parser.percentValue() * .20;
+                if (healValue > 20)
+                    healValue = 20.0;
+                target.setHealth(healValue);
+            } else if (parser.doubleIndex() >= 0) {
+                double healValue = Double.parseDouble(args[parser.doubleIndex()]);
+                if (healValue > 20)
+                    healValue = 20.0;
+                target.setHealth(healValue);
+            }
+
+            //Sending Messages
+            if(sender instanceof Player && sender.hasPermission("EZCommands.command.heal.silent") && parser.isSilent()) {
+            }
+            else {
+                if (target != sender)
+                    target.sendMessage(messageFormatter("command.heal.output.targetConsole", sender, target));
+                sender.sendMessage(messageFormatter("command.heal.output.target", sender, target));
+            }
         }
     }
     private String messageFormatter(String msg, CommandSender sender, Player target) {

@@ -2,6 +2,7 @@ package me.craftybr.ezcommands;
 
 import me.craftybr.ezcommands.commands.CommandFly;
 import me.craftybr.ezcommands.commands.CommandHeal;
+import me.craftybr.ezcommands.commands.CommandReload;
 import me.craftybr.ezcommands.listeners.flyFallDamage;
 import me.craftybr.ezcommands.listeners.onPlayerJoin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,7 @@ public final class EZCommands extends JavaPlugin {
     public void commandReference() {
         Objects.requireNonNull(this.getCommand("fly")).setExecutor(new CommandFly());
         Objects.requireNonNull(this.getCommand("heal")).setExecutor(new CommandHeal());
+        Objects.requireNonNull(this.getCommand("heal")).setExecutor(new CommandReload());
     }
 
     public void eventReference() {

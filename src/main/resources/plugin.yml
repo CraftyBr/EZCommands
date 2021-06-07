@@ -16,6 +16,10 @@ commands:
     description: Heal a player
     permission: EZCommands.commands.heal
     permission-message: §eYou do not have permission to do /heal
+  reload:
+    description: Reloads CMI Configuration Files
+    permission: EZcommands.commands.reload
+    permission-message: §eYou do not have permission to do /ezc reload
 
 #permissions:
 #  EZCommands.commands.*:

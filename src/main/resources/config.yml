@@ -9,10 +9,12 @@
 # [boolean] - Displays the status of a boolean change.
 # [number] - Displays the status of a number.
 # [percent] - Displays the status of a percent.
+# [prefix] - Displays the plugin's set prefix. Default: '[EZC]'
 # [target] - Displays the username of the player the command has been executed on.
 # [usage] - Displays the proper usage for each command, located on each command's USAGE line. Recommended to not change.
 
-
+generic:
+  prefix: '&e[EZC]'
 error:
   console:
     usage: 'Correct Usage: [usage].'
@@ -21,7 +23,6 @@ error:
     usage: '&eError: Correct Usage: [usage]'
     notarget: '&eError: No target found.'
     nopermission: '&eYou do not have permission to do this.'
-
 command:
   fly:
     help:
@@ -39,3 +40,9 @@ command:
       senderConsole: '[target] has been healed.'
       target: '&eYou have been healed.'
       targetConsole: '&eYou have been healed.'
+  reload:
+    help:
+      usage: '/EZC reload'
+    output:
+      sender: '&6[prefix] &eFile Configuration has been reloaded'
+      senderConsole: '[prefix] File Configuration has been reloaded'
